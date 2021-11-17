@@ -12,9 +12,9 @@ export default function Header(props) {
     }
     return(
         <div className="header" id='header'>
-            <p className='bb'><a href="./blackbit-tiles.html">BB</a></p>
+            <p className='bb'><a onClcik={() => window.location.reload()}>BB</a></p>
             <div className="header-titles">
-            <p className="title"><a href="./blackbit-tiles.html">BlackBit Capital</a></p>
+            <p className="title"><a onClick={() => window.location.reload() }>BlackBit Capital</a></p>
             <p className='intro'>Actively Managed DeFi Funds, Built on DeFi!</p>
             </div>
                 {wallet}

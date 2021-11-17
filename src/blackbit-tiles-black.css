@@ -852,10 +852,7 @@ input::-webkit-inner-spin-button {
     }
 }
 
-@media only screen and (max-width: 1000px)  {
-    html{
-        font-size: 12px;
-    }    
+@media only screen and (max-width: 1000px)  {   
 
     .bb {
         display: none;
@@ -866,13 +863,13 @@ input::-webkit-inner-spin-button {
     }
 }
 
-@media only screen and (max-width: 700px) and (orientation: portrait) {
+@media only screen and (orientation: portrait) {
     html {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .header {
-        height: 13vh;
+        height: 8vh;
     }
 
     .bb a{
@@ -1071,6 +1068,18 @@ input::-webkit-inner-spin-button {
 
     .fund-popup-box{
         height: 46.5vh;
+    }
+
+    .home-section-body{
+        width: 95%;
+    }
+
+    .answer{
+        width: 95%;
+    }
+
+    .footer{
+        height: 8vh;
     }
 
 } 

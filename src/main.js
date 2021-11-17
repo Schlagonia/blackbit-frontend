@@ -96,20 +96,22 @@ function openMobileChart(connected, openFund, openChart, fundInfo, fundReturn, d
 
 
 function openChartMm(connected) {
+
     //check if vertical or horizontal
-    var mq = window.matchMedia( "(max-width: 700px)" );
-    if(mq.matches){
+    //var mq = window.matchMedia( "(max-width: 700px)" );
+    if( window.innerHeight > window.innerWidth ){
+
         openMobileChart(connected, 'mm', 'mm-chart', 'mm-fund-info', 'mm-fund-return', 'mm-deposit-withdrawal', 'mm-arrow')
     } 
     else {  
     openChart('mm', 'mm-chart', 'mm-more-info', 'index', 'index-chart', 'farm', 'farm-chart');
     //fundButtonClick('mm', 'mm-dropdown-input', 'mm-deposit', 'mm-withdrawal');
     }
-};
+};  
 
 function openChartIndex(connected) {
-    var mq = window.matchMedia( "(max-width: 700px)" );
-    if(mq.matches){
+    //var mq = window.matchMedia( "(max-width: 700px)" );
+    if( window.innerHeight > window.innerWidth ){
         openMobileChart(connected, 'index', 'index-chart', 'index-fund-info', 'index-fund-return', 'index-deposit-withdrawal', 'index-arrow')
     } else{
     openChart('index', 'index-chart', 'index-more-info', 'mm', 'mm-chart', 'farm', 'farm-chart');
@@ -118,8 +120,8 @@ function openChartIndex(connected) {
 };
 
 function openChartFarm(connected) {
-    var mq = window.matchMedia( "(max-width: 700px)" );
-    if(mq.matches){
+    //var mq = window.matchMedia( "(max-width: 700px)" );
+    if( window.innerHeight > window.innerWidth ){
         openMobileChart(connected, 'farm', 'farm-chart', 'farm-fund-info', 'farm-fund-return', 'farm-deposit-withdrawal', 'farm-arrow')
     } else {
     openChart('farm', 'farm-chart', 'farm-more-info', 'mm', 'mm-chart', 'index', 'index-chart');
