@@ -865,7 +865,7 @@ input::-webkit-inner-spin-button {
 
 @media only screen and (orientation: portrait) {
     html {
-        font-size: 12px;
+        font-size: 25px;
     }
 
     .header {
@@ -1074,8 +1074,18 @@ input::-webkit-inner-spin-button {
         width: 95%;
     }
 
+    .table-of-contents{
+        width: 95%
+    }
+
     .answer{
+        padding-top: 2%;
         width: 95%;
+        padding-bottom: 2%;
+    }
+
+    .answer-text{
+        font-size: 1rem;
     }
 
     .footer{
