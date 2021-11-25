@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 import FundContract from "./contracts/Fund.json";
 import BBMMContract from "./contracts/BBMM.json";
-import DAIContract from "./contracts/DAI.json";
+import DAIContract from "./contracts/DAI.json"
 import getWeb3 from "./getWeb3";
 import Header from './header';
 import Footer from './footer';
@@ -17,105 +17,118 @@ import "./App.css";
 const sections = ['TR', 'HIW','WB', 'DT'];
 
 
-class App extends Component {
+function App(props) {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      web3: null,
-      mm: null,
-      bbmm: null,
-      DAI: null,
-      account: null,
-      mmReturn: 8.57,
-      mmBalance: 0.00,
-      indexNav: 10.00,
-      indexBalance: 0.00,
-      farmReturn: 0,
-      farmBalance: 0.00,
-      divider: null,
-      loading: true,
-      faq: false,
-      popupOpen: false,
-      orderType: '',
-      orderAmount: 0,
-      orderHash: null,
-      mmDepositOpen: false,
-      mmWithdrawOpen: false,
-    }
-    this.checkBalance = this.checkBalance.bind(this)
-  }
 
-  componentDidMount = async () => {
+    const [ web3, setWeb3 ] = useState(null)
+    const [ mm, setMm] = useState(null)
+    const [ bbmm, setBbmm] = useState(null)
+    const [ Dai, setDai] = useState(null)
+    const [ account, setAccount] = useState(null)
+    const [ mmReturn, setMmReturn ] = useState(8.57)
+    const [ mmBalance, setMmBalance ] = useState(0.00)
+    const [ indexNav, setIndexNav ] = useState(10.00)
+    const [ indexBalance, setIndexBalance ] = useState(0.00)
+    const [ farmReturn, setFarmReturn ] = useState(0)
+    const [ farmBalance, setFarmBalance ] = useState(0.00)
+    const [ divider, setDivider ] = useState(null)
+    const [ loading, setLoading ] = useState(true)
+    const [ faq, setFaq ] = useState(false)
+    const [ popupOpen, setPopupOpen ] = useState(false)
+    const [ orderType, setOrderType ] = useState('')
+    const [ orderAmount, setOrderAmount ] = useState(0)
+    const [ orderHash, setOrderHash ] = useState(null)
+    const [ mmDepositOpen, setMmDepositOpen ] = useState(false)
+    const [ mmWithdrawOpen, setMmWithdrawOpen ] = useState(false)
+
+
+  useEffect(() => {
+
+    async function getBlockchainData() {
+      console.log('loading data')
     try {
       // Get network provider and web3 instance.
-      const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
-      const account = await web3.eth.getAccounts();
+      const Web3 = await getWeb3();
+      setWeb3(Web3)
+      console.log('got web3')
 
       // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
+      const networkId = await Web3.eth.net.getId();
 
       const bbmmDeployedNetwork = BBMMContract.networks[networkId];
-      const bbmm = new web3.eth.Contract(
+      const BBMM = new Web3.eth.Contract(
         BBMMContract.abi,
         bbmmDeployedNetwork && bbmmDeployedNetwork.address,
       );
+      console.log(BBMM.options.address)
 
       const fundDeployedNetwork = FundContract.networks[networkId];
-      const mm = new web3.eth.Contract(
+      const MM = new Web3.eth.Contract(
         FundContract.abi,
         fundDeployedNetwork && fundDeployedNetwork.address,
       );
 
+      console.log(MM.options.address)
+
       const daiDeployedNetwork = DAIContract.networks[networkId];
-      const DAI = new web3.eth.Contract(
+      const DAI = new Web3.eth.Contract(
         DAIContract.abi,
         daiDeployedNetwork && daiDeployedNetwork.address,
       );
+      console.log(DAI.options.address)
 
-      const bbmmBalance = new web3.utils.BN( await bbmm.methods.balanceOf(account[0]).call());
-    
-      const pps = new web3.utils.BN( await mm.methods.PPS().call());
-      
-      const divider = new web3.utils.BN(1000)
-      const mmWeiBalance = bbmmBalance.mul(pps).div(divider);
-      
-      const mmBalance = web3.utils.fromWei(mmWeiBalance.toString());
+      setBbmm(BBMM)
+      setMm(MM)
+      setDai(DAI)
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, account, mm, bbmm, DAI, mmBalance, divider });
+      // Use web3 to get the user's accounts.
+      const accounts = await Web3.eth.getAccounts();
+      if(accounts[0]) {
+        console.log('got account')
+        setAccount(accounts[0])
+
+        const bbmmBalance = new Web3.utils.BN( await BBMM.methods.balance(accounts[0]).call());
+        console.log(bbmmBalance)
+        const pps = new Web3.utils.BN( await MM.methods.PPS().call());
+      
+        const divider = new Web3.utils.BN(1000)
+        const mmWeiBalance = bbmmBalance.mul(pps).div(divider);
+      
+        const mmBalance = Web3.utils.fromWei(mmWeiBalance.toString());
+
+        setDivider(divider)
+        setMmBalance(mmBalance)
+
+      }
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
       console.error(error);
     }
-  };
+  }
+    getBlockchainData();
 
-  checkBalance = async () => {
-    const { bbmm, mm, web3, account, divider } = this.state;
+  }, []);
 
-    const bbmmBalance = new web3.utils.BN( await bbmm.methods.balanceOf(account[0]).call());
+  const checkBalance = async () => {
+    console.log('checking balance')
+    const bbmmBalance = new web3.utils.BN( await bbmm.methods.balance(account).call());
     const pps = new web3.utils.BN( await mm.methods.PPS().call());
     
     const mmWeiBalance = bbmmBalance.mul(pps).div(divider);
     
-    const mmBalance = web3.utils.fromWei(mmWeiBalance.toString());
-
-    this.setState({ mmBalance })
+    const Balance = web3.utils.fromWei(mmWeiBalance.toString());
+    console.log(Balance)
+    setMmBalance(Balance)
+    console.log('set balance')
   }
 
-  togglePopup =() => {
-    this.setState({ popupOpen: !this.state.popupOpen})
+  const togglePopup =() => {
+    setPopupOpen(!popupOpen)
   }
 
-  depositPopUp = (fund) => {
+  const depositPopUp = (fund) => {
     if(fund == 'mm'){
-      this.setState({ mmDepositOpen: true })
+      setMmDepositOpen(true)
     }
     else if (fund == 'index'){
       
@@ -124,9 +137,9 @@ class App extends Component {
     }
   }
 
-  WithdrawPopUp = (fund) => {
+  const WithdrawPopUp = (fund) => {
     if(fund == 'mm'){
-      this.setState({ mmWithdrawOpen: true })
+      setMmWithdrawOpen(true)
     }
     else if (fund == 'index'){
       
@@ -135,12 +148,14 @@ class App extends Component {
     }
   }
 
-  confirmTransaction =(orderType, orderAmount, orderHash) => {
-    this.setState({ orderType, orderAmount, orderHash, popupOpen: true })
-    this.checkBalance();
+  const confirmTransaction =(orderType, orderAmount, orderHash) => {
+    setOrderType(orderType)
+    setOrderAmount(orderAmount)
+    setOrderHash(orderHash)
+    setPopupOpen(true)
+    checkBalance();
   }
 
-  render() {
 
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -154,85 +169,85 @@ class App extends Component {
 
     const home = (
       <div>
-        {this.state.popupOpen && <Popup
+        {popupOpen && <Popup
           content={
             <>
               <p>Congragulations!</p>
               <br></br>
-              <p>You succesfully {this.state.orderType} {formatter.format(this.state.orderAmount)}!</p>
+              <p>You succesfully {orderType} {formatter.format(orderAmount)}!</p>
               <br></br>
-              <p>You should now see this reflected in your wallet and BlackBit account balance.</p>
+              <p>You should now see  reflected in your wallet and BlackBit account balance.</p>
               <br></br>
-              <p>View your transaction on <a href={`https://etherscan.io/tx/${this.state.orderHash}`} target='_blank' > EtherScan {this.state.orderHash}</a></p>
+              <p>View your transaction on <a href={`https://etherscan.io/tx/${orderHash}`} target='_blank' > EtherScan {orderHash}</a></p>
               <br></br>
-              <p className='popup-link' onClick={() => this.setState({ faq: true })}>FAQ</p>
+              <p className='popup-link' onClick={() => setFaq( true ) }>FAQ</p>
             </>
           }
-          handleClose={this.togglePopup}
+          handleClose={togglePopup}
         />}
-        {this.state.mmDepositOpen && <MMDeposit
-          web3={this.state.web3}
-          mm={this.state.mm}
-          account={this.state.account}
-          DAI={this.state.DAI}
-          confirmTransaction={this.confirmTransaction}
-          handleClose={() => this.setState({ mmDepositOpen: false })}
+        {mmDepositOpen && <MMDeposit
+          web3={web3}
+          mm={mm}
+          account={account}
+          Dai={Dai}
+          confirmTransaction={confirmTransaction}
+          handleClose={() => setMmDepositOpen( false )}
       />}
-        {this.state.mmWithdrawOpen && <MMWithdraw
-          web3={this.state.web3}
-          mm={this.state.mm}
-          account={this.state.account}
-          DAI={this.state.DAI}
-          mmBalance={this.state.mmBalance}
-          confirmTransaction={this.confirmTransaction}
-          handleClose={() => this.setState({ mmWithdrawOpen: false })}
+        {mmWithdrawOpen && <MMWithdraw
+          web3={web3}
+          mm={mm}
+          account={account}
+          Dai={Dai}
+          mmBalance={mmBalance}
+          confirmTransaction={confirmTransaction}
+          handleClose={() => setMmWithdrawOpen( false ) }
       />}
         <div className='sticky-cointainer'>
           <Header 
-            account={this.state.account}
-            walletConnected={this.walletConnected}
+            account={account}
+            //walletConnected={walletConnected}
           />
           <div className="banner" id='banner' >
-            <p className='learn' onClick={() => this.setState({ faq: true })}>Learn How BlackBit Works</p> 
+            <p className='learn' onClick={() => setFaq( true )}>Learn How BlackBit Works</p> 
           </div>
           <FundSection 
-            account={this.state.account}
-            mmReturn={this.state.mmReturn}
-            mmBalance={this.state.mmBalance}
-            indexNav={this.state.indexNav}
-            indexBalance={this.state.indexBalance}
-            farmReturn={this.state.farmReturn}
-            farmBalance={this.state.farmBalance}
-            loading={this.state.loading}
-            walletConnected={this.walletConnected}
-            deposit={this.depositPopUp}
-            withdraw={this.WithdrawPopUp}
+            account={account}
+            mmReturn={mmReturn}
+            mmBalance={mmBalance}
+            indexNav={indexNav}
+            indexBalance={indexBalance}
+            farmReturn={farmReturn}
+            farmBalance={farmBalance}
+            loading={loading}
+            //walletConnected={walletConnected}
+            deposit={depositPopUp}
+            withdraw={WithdrawPopUp}
           />
         </div>
         <div>{homeSections}</div>
     </div>
     )
 
-    const faq = (
+    const learn = (
       <div>
         <Header 
-          account={this.state.account}
-          connected={this.state.connected}
+          account={account}
+          //connected={connected}
         />
         <FAQ />
       </div>
     )
 
-    const display = this.state.faq ? faq : home ;
+    const display = faq ? learn : home ;
 
     return (
       <div className="App">
         {display}
         <Footer 
-          faqClick={() => this.setState({ faq: true })}
+          faqClick={() => setFaq(true) }
         />
       </div>
   );
-  }
+  
 }
 export default App;

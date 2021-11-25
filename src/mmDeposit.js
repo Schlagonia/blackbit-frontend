@@ -12,7 +12,7 @@ const MMDeposit = props => {
     const [ showDeposit, setShowDeposit ] = useState(false);
     const [ approving, setApproving ] = useState(false)
     const [ depositing, setDepositing ] = useState(false)
-    const { mm, web3, account, DAI } = props;
+    const { mm, web3, account, Dai } = props;
 
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -26,16 +26,21 @@ const MMDeposit = props => {
 
       (async () => {
         if(token == 'DAI'){
+          try{
           setShowInput(true);
-          const weiBal = await DAI.methods.balanceOf(account[0]).call();
+          const weiBal = await Dai.methods.balance(account).call();
   
           const bal = web3.utils.fromWei(weiBal);
-          
 
           setBalance(bal)
+
+          } catch(error){
+            console.log(error)
+          }
+
         } else if(token == 'USDC'){
           setShowInput(true);
-          setBalance(100);
+          setBalance(0);
         }
       })();
     }, [token]);
@@ -50,16 +55,16 @@ const MMDeposit = props => {
 
     const approveDai = async (toDeposit) => {
 
-      const approval = await DAI.methods.allowance(account[0], mm.options.address).call();
+      const approval = await Dai.methods.allowance(account, mm.options.address).call();
 
       const approved = new web3.utils.BN(approval);
       
-        const diff = toDeposit.sub(approved).toString();
+      const diff = toDeposit.sub(approved).toString();
 
       if(diff > 0) {
         setApproving(true)
         try {
-         await DAI.methods.approve(mm.options.address, diff).send({ from: account[0] }).on('transactionHash', (hash)=> {
+         await Dai.methods.approve(mm.options.address, diff).send({ from: account }).on('transactionHash', (hash)=> {
             return true;
           });
 
@@ -87,20 +92,24 @@ const MMDeposit = props => {
 
 
             try {
-              await mm.methods.depositDai(toDeposit.toString()).send({ from: account[0] }).on('transactionHash', (hash) => {
-                props.handleClose();  
-                props.confirmTransaction('deposited', value, hash)
-             });
+              const txn = await mm.methods.depositDai(toDeposit.toString()).send({ from: account }).on('transactionHash', (hash) => {
+
+              mm.once('deposited', {}, 
+
+                console.log('done'),
+                props.confirmTransaction('deposited', value, hash),
+                props.handleClose()  
+              );
+            });
     
             }catch (error) {
-              alert('Transaction Failed');
               console.log(error);
             }
 
           }
     
           }
-          setDepositing(false)  
+            
       }
       
   return (
@@ -140,7 +149,7 @@ const MMDeposit = props => {
         <p className='popup-title'>Deposit into the BlackBit Money Market!</p>
         <div className='deposit-section'>
             <div className="dropdown">
-                    <label htmlfor="coin-choice">Select Coin: </label>
+                    <label htmlFor="coin-choice">Select Coin: </label>
                         <select className="coin-name" id="coin-names" onChange={e => setToken(e.target.value)}>
                             <option className='dropdown-coin' value=""></option>
                             <option className='dropdown-coin' value="DAI">DAI</option>

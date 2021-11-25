@@ -1480,7 +1480,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1783,
+                          "referencedDeclaration": 1813,
                           "src": "1008:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1510,7 +1510,7 @@
                             "name": "this",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1799,
+                            "referencedDeclaration": 1829,
                             "src": "1028:4:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_contract$_Aave_$184",
@@ -1658,7 +1658,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1783,
+                          "referencedDeclaration": 1813,
                           "src": "1064:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1727,7 +1727,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1783,
+                          "referencedDeclaration": 1813,
                           "src": "1110:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2029,7 +2029,7 @@
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1783,
+                              "referencedDeclaration": 1813,
                               "src": "1266:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_message",
@@ -2094,10 +2094,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1786,
-                        1787
+                        1816,
+                        1817
                       ],
-                      "referencedDeclaration": 1786,
+                      "referencedDeclaration": 1816,
                       "src": "1248:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2154,7 +2154,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1783,
+                          "referencedDeclaration": 1813,
                           "src": "1318:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2301,7 +2301,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1783,
+                          "referencedDeclaration": 1813,
                           "src": "1400:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -4061,7 +4061,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1783,
+                                  "referencedDeclaration": 1813,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4114,7 +4114,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1799,
+                                  "referencedDeclaration": 1829,
                                   "type": "contract Aave",
                                   "value": "this"
                                 },
@@ -4206,7 +4206,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1783,
+                                      "referencedDeclaration": 1813,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -4319,7 +4319,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1783,
+                                  "referencedDeclaration": 1813,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4552,10 +4552,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1786,
-                                1787
+                                1816,
+                                1817
                               ],
-                              "referencedDeclaration": 1786,
+                              "referencedDeclaration": 1816,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4620,7 +4620,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1783,
+                                          "referencedDeclaration": 1813,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4722,7 +4722,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1783,
+                                      "referencedDeclaration": 1813,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -4924,7 +4924,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1783,
+                                  "referencedDeclaration": 1813,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4989,12 +4989,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x84C90D795800AA6175645A5e5F126dfa3739a2c9",
-      "transactionHash": "0xcb177a281ca1713d225706c99e1685ab840002e78f49f33b819a6badecb640ce"
+      "address": "0x86BCD56c703dA4916AE0F4633232DE5C541D5a77",
+      "transactionHash": "0x32a495024b633fc7586b0beac27569519bc3e2d3cc768b71aa9b9fe3439097e1"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-09T23:42:20.006Z",
+  "updatedAt": "2021-11-24T22:09:43.038Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

@@ -1,39 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
-class Question extends Component {
+function Question(props) {
 
-    constructor(props){
-        super(props)
-        this.state ={
-            display: false,
-        }
-        this.handleClick = this.handleClick.bind(this)
+    const [ display, setDisplay ] = useState(false);
+
+    const handleClick = () => {
+        setDisplay(!display);
     }
 
-    handleClick() {
-        this.setState({ display: !this.state.display })
-    }
-
-    render() {
-    
     return (
         <div 
             className="full-question" 
-            id={`${this.props.question}-q`} 
-            style={{ borderBottomStyle: this.state.display ? 'inset' : 'none'}} 
-            onClick={this.handleClick}
+            id={`${props.question}-q`} 
+            style={{ borderBottomStyle: display ? 'inset' : 'none'}} 
+            onClick={handleClick}
         >
             <p 
                 className="question"    
-            >{this.props.question}?</p>  
-            <div className="answer" id={this.props.question} style={{ display: this.state.display ? 'flex' : 'none' }}>
+            >{props.question}?</p>  
+            <div className="answer" id={props.question} style={{ display: display ? 'flex' : 'none' }}>
                 <div className="question-video"></div>
-                <p className="answer-text">{this.props.answer}</p>
+                <p className="answer-text">{props.answer}</p>
             </div>
         </div>
     )
-    }
+    
 }
 
 export default Question;

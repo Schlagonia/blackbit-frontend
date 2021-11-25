@@ -12,7 +12,7 @@ export default function Fund(props){
     const [ fundOpen, setFundOpen ] = useState(true);
 
     useEffect(() => {
-        if(id == 'mm'){
+        if(id === 'mm'){
             setFundOpen(false)
         }
     }, [])
@@ -27,13 +27,13 @@ export default function Fund(props){
 
     let dollar;
     let percent;
-    if(id == 'mm'){
+    if(id === 'mm'){
         dollar = ''
         percent = '%'
-    } else if(id == 'index'){
+    } else if(id === 'index'){
         dollar = '$';
         percent = '';
-    } else if(id == 'farm'){
+    } else if(id === 'farm'){
         dollar = '';
         percent = '%';
     }

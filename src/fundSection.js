@@ -1,42 +1,34 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 import Fund from "./fund";
 import Chart from "./chart";
 import { openChartMm, openChartIndex, openChartFarm } from './main';
 import Popup from "./popup";
 
-class FundSection extends Component {
+function FundSection(props) {
 
-    
-    constructor(props){ 
-        super(props)
-        this.state = {
-            buyToOpen: false,
-        }
+    const [buyToOpen, setBuyToOpen ] = useState(false)
 
-    }
-
-    render() {
 
     const openChart = (id) => {
         if(id == 'mm'){
-            openChartMm(this.props.account)
+            openChartMm(props.account)
         } else if(id == 'index'){
-            openChartIndex(this.props.account)
+            openChartIndex(props.account)
         } else if(id ='farm') {
-            openChartFarm(this.props.account)
+            openChartFarm(props.account)
         }
     }
 
     const togglePopup =() => {
-        this.setState({ buyToOpen: !this.state.buyToOpen });
+        setBuyToOpen(!buyToOpen);
       }
 
     const deposit = (fund) => {
-        this.props.deposit(fund);
+        props.deposit(fund);
     }
 
     const withdraw = (fund) => {
-        this.props.withdraw(fund);
+        props.withdraw(fund);
     }
 
     const displays = {
@@ -45,11 +37,11 @@ class FundSection extends Component {
                     title='Money Market'
                     id='mm'
                     measurment='Current APY:'
-                    account={this.props.account}
-                    returns={this.props.mmReturn}
-                    balance={this.props.mmBalance}
+                    account={props.account}
+                    returns={props.mmReturn}
+                    balance={props.mmBalance}
                     onClick={openChart}
-                    walletConnected={this.props.walletConnected}
+                    walletConnected={props.walletConnected}
                     deposit={deposit}
                     withdraw={withdraw}
                     buyToOpen={() => togglePopup()}
@@ -60,11 +52,11 @@ class FundSection extends Component {
                     title='DeFi Index'
                     id='index'
                     measurment='NAV:'
-                    account={this.props.account}
-                    returns={this.props.indexNav}
-                    balance={this.props.indexBalance}
+                    account={props.account}
+                    returns={props.indexNav}
+                    balance={props.indexBalance}
                     onClick={openChart}
-                    walletConnected={this.props.walletConnected}
+                    walletConnected={props.walletConnected}
                     buyToOpen={() => togglePopup()}
                 />
         ),
@@ -73,11 +65,11 @@ class FundSection extends Component {
                     title="Farm'n Fund"
                     id='farm'
                     measurment='30 Day Return:'
-                    account={this.props.account}
-                    returns={this.props.farmReturn}
-                    balance={this.props.farmBalance}
+                    account={props.account}
+                    returns={props.farmReturn}
+                    balance={props.farmBalance}
                     onClick={openChart}
-                    walletConnected={this.props.walletConnected}
+                    walletConnected={props.walletConnected}
                     buyToOpen={() => togglePopup()}
                 />
                 
@@ -107,7 +99,7 @@ class FundSection extends Component {
 
     return (
         <div className='fund-section'>
-            {this.state.buyToOpen && <Popup
+            {buyToOpen && <Popup
                 content={
                     <>
                         <h3>How To Buy!!!!</h3>
@@ -118,7 +110,7 @@ class FundSection extends Component {
             {all}
         </div>
     )
-    }
+    
 }
 
 export default FundSection;

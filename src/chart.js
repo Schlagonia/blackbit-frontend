@@ -125,10 +125,10 @@ export default function Chart(props) {
           handleClose={togglePopup}
         />}
             <div className='chart-tab-section'>
-                <div class='chart-tab' id={`${tabOne}-chart-tab-${id}`} onClick={() => togglePopup()}>            
+                <div className='chart-tab' id={`${tabOne}-chart-tab-${id}`} onClick={() => togglePopup()}>            
                     BlackBit {name[tabOne]}
                 </div>
-                <div class='chart-tab' id={`${tabTwo}-chart-tab-${id}`} onClick={()=> togglePopup()}>            
+                <div className='chart-tab' id={`${tabTwo}-chart-tab-${id}`} onClick={()=> togglePopup()}>            
                     BlackBit {name[tabTwo]}
                 </div>
             </div>

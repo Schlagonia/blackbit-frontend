@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Question from './question';
 
 
 
-class FAQ extends Component {
+function FAQ(props) {
     
-    
-    render() {
     
     const allQuestions = [
         {
@@ -108,7 +106,7 @@ class FAQ extends Component {
                 </p>
             </div>
     )
-        }
+        
 };
 
 export default FAQ;

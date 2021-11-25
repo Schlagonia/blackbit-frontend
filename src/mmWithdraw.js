@@ -4,7 +4,7 @@ import Popup from "./popup";
 
 const MMWithdraw = props => {
 
-    const { mm, web3, account, DAI, mmBalance } = props;
+    const { mm, web3, account, Dai, mmBalance } = props;
     const [ token, setToken ] = useState('');
     const [ value, setValue ] = useState();
     const [ buyToOpen, setbuyToOpen] = useState(false)
@@ -53,15 +53,18 @@ const MMWithdraw = props => {
             const toWithdraw = new web3.utils.toBN(withdraw);
 
     
-            await mm.methods.withdrawal(toWithdraw.toString()).send({ from: account[0] }).on('transactionHash', (hash) => {
-                props.handleClose();
-                props.confirmTransaction('withdrew', value, hash)
-            })
-    
-          }
-        
-        setWithdrawing(false)
+            await mm.methods.withdrawal(toWithdraw.toString()).send({ from: account }).on('transactionHash', (hash) => {
+              mm.once('withdrew', {}, 
 
+                console.log('done'),
+                props.confirmTransaction('deposited', value, hash),
+                props.handleClose()
+
+          
+             );
+    
+            })
+          }
       }
       
   return (
